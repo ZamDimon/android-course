@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+
+        <com.androidplot.xy.XYPlot
+            android:id="@+id/plot"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:layout_weight="1"
+            app:domainTitle="domain"
+            app:layout_constraintBottom_toTopOf="@+id/frequency_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lineLabelRotationBottom="-45"
+            app:lineLabels="left|bottom"
+            app:rangeTitle="range"
+            app:title="A Simple XY Plot" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/frequency_slider"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:valueFrom="-5"
+            android:stepSize="0.1"
+            android:valueTo="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
