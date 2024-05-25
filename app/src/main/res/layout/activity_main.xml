@@ -13,6 +13,17 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/design_default_color_primary_dark"
+            android:elevation="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/plot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <com.androidplot.xy.XYPlot
             android:id="@+id/plot"
@@ -28,10 +39,22 @@
             app:lineLabelRotationBottom="-45"
             app:lineLabels="left|bottom"
             app:rangeTitle="range"
-            app:title="A Simple XY Plot" />
+            app:title="Plot" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/frequency_slider"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:valueFrom="-2"
+            android:stepSize="0.1"
+            android:valueTo="2"
+            app:layout_constraintBottom_toTopOf="@+id/x_limits_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/x_limits_slider"
+            app:labelBehavior="withinBounds"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:valueFrom="-5"

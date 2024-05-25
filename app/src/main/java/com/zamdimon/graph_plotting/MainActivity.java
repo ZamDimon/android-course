@@ -12,63 +12,50 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYSeries;
 import com.google.android.material.slider.RangeSlider;
 import com.zamdimon.graph_plotting.databinding.ActivityMainBinding;
+import com.zamdimon.graph_plotting.plot.HarmonicPlot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    /** Represents the binding of the activity which makes
+     * it easier to manage elements of the activity */
     private ActivityMainBinding binding = null;
-    private float sliderValue = 0;
 
-    // TODO: Make configurable
-    private final float xMin = -5;
-    private final float xMax = 5;
+    /** Represents the plot to be displayed */
+    private HarmonicPlot harmonicPlot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        onSliderChange();
-        drawPlot();
+        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setSupportActionBar(this.binding.toolbar);
+
+        // Setting sliders
+        initializeFrequencySlider();
+        initializeLimitsSlider();
+
+        // Setting the harmonic plot
+        this.harmonicPlot = new HarmonicPlot(-5.0f, 5.0f, 1.0f);
+        this.harmonicPlot.drawPlot(binding.plot);
     }
 
-    private void onSliderChange() {
-        binding.frequencySlider.addOnChangeListener(touchListener);
+    private void initializeLimitsSlider() {
+        binding.xLimitsSlider.setValues(HarmonicPlot.MIN_LEFT_LIMIT, HarmonicPlot.MAX_RIGHT_LIMIT);
+        binding.xLimitsSlider.addOnChangeListener((slider, value, fromUser) -> {
+            float leftLimit = binding.xLimitsSlider.getValues().get(0);
+            float rightLimit = binding.xLimitsSlider.getValues().get(1);
+            harmonicPlot.updateLimits(leftLimit, rightLimit);
+            harmonicPlot.drawPlot(binding.plot);
+        });
     }
 
-    private void drawPlot() {
-        List<Number> xNumbers = new ArrayList<>();
-        List<Number> yNumbers = new ArrayList<>();
-
-        final int POINTS_NUMBER = 100;
-        for (int i = 0; i < POINTS_NUMBER; ++i) {
-            float x = xMin + (xMax - xMin)*i / POINTS_NUMBER;
-            float y = (float) Math.sin(sliderValue * x);
-
-            xNumbers.add(x);
-            yNumbers.add(y);
-        }
-
-
-        XYSeries series = new SimpleXYSeries(xNumbers, yNumbers, "Graph");
-        LineAndPointFormatter pointFormatter = new LineAndPointFormatter(
-                null, Color.GREEN, null, null);
-        binding.plot.clear();
-        binding.plot.addSeries(series, pointFormatter);
-        binding.plot.redraw();
+    private void initializeFrequencySlider() {
+        binding.frequencySlider.addOnChangeListener((rangeSlider, frequency, b) -> {
+            harmonicPlot.updateCyclicFrequency(frequency);
+            harmonicPlot.drawPlot(binding.plot);
+        });
     }
-
-
-    private final RangeSlider.OnChangeListener touchListener = new RangeSlider.OnChangeListener() {
-        @Override
-        public void onValueChange(@NonNull RangeSlider rangeSlider, float v, boolean b) {
-            sliderValue = v;
-            drawPlot();
-        }
-    };
-
-
 }
 

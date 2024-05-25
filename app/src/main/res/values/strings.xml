@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">graph-plotting</string>
+    <string name="app_name">Graph Plotting</string>
+    <string name="main_screen_title">Graph Plotting</string>
 </resources>
