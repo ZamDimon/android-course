@@ -23,6 +23,9 @@ public class HarmonicPlot {
     /** Represents the maximal right value the plot can end drawing up. */
     public static final float MAX_RIGHT_LIMIT = 5.0f;
 
+    private final int LINE_COLOR = Color.GREEN;
+    private final int POINT_COLOR = Color.RED;
+
     /** Function which is being plotted. By default, as the problem suggests,
      * we draw a function sin(omega*x) + cos(omega*x) */
     private Function<Float, Float> function = x -> (float) (Math.sin(x) + Math.cos(x));
@@ -73,6 +76,23 @@ public class HarmonicPlot {
     }
 
     /**
+     * Estimates the number of points needed to draw the plot.
+     * @return the estimated number of points needed to draw the plot
+     */
+    private int estimatePointsNumber() {
+        float period = 2 * (float) Math.PI / this.cyclicFrequency;
+        // We want approximately 8 points per period. Meaning, the total
+        // number of points is the total number of periods in the specified
+        // interval multiplied by 8.
+        float periods = (this.rightLimit - this.leftLimit) / period;
+        // We want at least 10 points, otherwise adapt according to the number
+        // of periods.
+        final int POINTS_PER_PERIOD = 8;
+        final int MIN_POINTS = 13;
+        return Math.max((int) (periods * POINTS_PER_PERIOD), MIN_POINTS);
+    }
+
+    /**
      * Forms the plot points for the plot.
      * @return the XYSeries representing the plot points
      */
@@ -81,9 +101,9 @@ public class HarmonicPlot {
         List<Number> xNumbers = new ArrayList<>();
         List<Number> yNumbers = new ArrayList<>();
 
-        final int POINTS_NUMBER = 10;
-        for (int i = 0; i < POINTS_NUMBER; ++i) {
-            float x = this.leftLimit + (this.rightLimit - this.leftLimit) * i / POINTS_NUMBER;
+        int pointsNumber = this.estimatePointsNumber();
+        for (int i = 0; i < pointsNumber; ++i) {
+            float x = this.leftLimit + (this.rightLimit - this.leftLimit) * i / pointsNumber;
             float y = this.function.apply(x * this.cyclicFrequency);
 
             xNumbers.add(x);
@@ -101,7 +121,7 @@ public class HarmonicPlot {
         XYSeries series = this.formPlotPoints();
 
         LineAndPointFormatter pointFormatter = new LineAndPointFormatter(
-                null, Color.GREEN, null, null);
+                LINE_COLOR, POINT_COLOR, null, null);
         plot.clear();
         plot.addSeries(series, pointFormatter);
         plot.redraw();

@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">Graph Plotting</string>
-    <string name="main_screen_title">Graph Plotting</string>
+    <string name="app_name">Plotting App</string>
+    <string name="page_title">Plotting App</string>
+    <string name="edit">Edit</string>
+    <string name="favorite">Favorite</string>
+    <string name="more">More</string>
+    <string name="page_subtitle">Plotting Harmonic Function</string>
 </resources>

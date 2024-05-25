@@ -1,21 +1,9 @@
 package com.zamdimon.graph_plotting;
-
-import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYSeries;
-import com.google.android.material.slider.RangeSlider;
 import com.zamdimon.graph_plotting.databinding.ActivityMainBinding;
 import com.zamdimon.graph_plotting.plot.HarmonicPlot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     /** Represents the binding of the activity which makes
@@ -30,14 +18,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        setSupportActionBar(this.binding.toolbar);
+        this.binding.topAppBar.setOnMenuItemClickListener(item -> true);
 
         // Setting sliders
         initializeFrequencySlider();
         initializeLimitsSlider();
 
         // Setting the harmonic plot
-        this.harmonicPlot = new HarmonicPlot(-5.0f, 5.0f, 1.0f);
+        this.harmonicPlot = new HarmonicPlot(HarmonicPlot.MIN_LEFT_LIMIT, HarmonicPlot.MAX_RIGHT_LIMIT, 1.0f);
         this.harmonicPlot.drawPlot(binding.plot);
     }
 

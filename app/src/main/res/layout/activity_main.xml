@@ -13,53 +13,65 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary_dark"
-            android:elevation="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/plot"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:title="@string/page_title"
+                app:titleCentered="true"
+                app:subtitle="@string/page_subtitle"
+                app:menu="@menu/top_app_bar"
+                app:navigationIcon="@drawable/ic_close_24dp" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
 
         <com.androidplot.xy.XYPlot
             android:id="@+id/plot"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginBottom="32dp"
             android:layout_weight="1"
             app:domainTitle="domain"
             app:layout_constraintBottom_toTopOf="@+id/frequency_slider"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:lineLabelRotationBottom="-45"
             app:lineLabels="left|bottom"
             app:rangeTitle="range"
-            app:title="Plot" />
+            app:title="Plot"
+            />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/frequency_slider"
             android:layout_width="match_parent"
             android:layout_height="32dp"
-            android:valueFrom="-2"
             android:stepSize="0.1"
-            android:valueTo="2"
+            android:valueFrom="-2"
+            android:valueTo="5"
             app:layout_constraintBottom_toTopOf="@+id/x_limits_slider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/x_limits_slider"
-            app:labelBehavior="withinBounds"
             android:layout_width="match_parent"
             android:layout_height="32dp"
-            android:valueFrom="-5"
             android:stepSize="0.1"
+            android:valueFrom="-5"
             android:valueTo="5"
+            app:labelBehavior="withinBounds"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
