@@ -3,6 +3,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import com.zamdimon.graph_plotting.databinding.ActivityMainBinding;
+import com.zamdimon.graph_plotting.plot.HarmonicConfig;
 import com.zamdimon.graph_plotting.plot.HarmonicPlot;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,19 +19,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        this.binding.topAppBar.setOnMenuItemClickListener(item -> true);
+
+        // Setting the top bar
+        initializeTopBarMenu();
 
         // Setting sliders
         initializeFrequencySlider();
         initializeLimitsSlider();
 
         // Setting the harmonic plot
-        this.harmonicPlot = new HarmonicPlot(HarmonicPlot.MIN_LEFT_LIMIT, HarmonicPlot.MAX_RIGHT_LIMIT, 1.0f);
+        this.harmonicPlot = new HarmonicPlot();
         this.harmonicPlot.drawPlot(binding.plot);
     }
 
     private void initializeLimitsSlider() {
-        binding.xLimitsSlider.setValues(HarmonicPlot.MIN_LEFT_LIMIT, HarmonicPlot.MAX_RIGHT_LIMIT);
+        binding.xLimitsSlider.setValues(HarmonicConfig.MIN_LEFT_LIMIT, HarmonicConfig.MAX_RIGHT_LIMIT);
         binding.xLimitsSlider.addOnChangeListener((slider, value, fromUser) -> {
             float leftLimit = binding.xLimitsSlider.getValues().get(0);
             float rightLimit = binding.xLimitsSlider.getValues().get(1);
@@ -44,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             harmonicPlot.updateCyclicFrequency(frequency);
             harmonicPlot.drawPlot(binding.plot);
         });
+    }
+
+    private void initializeTopBarMenu() {
+        binding.topAppBar.setOnMenuItemClickListener(item -> true);
     }
 }
 

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Plotting App</string>
     <string name="page_title">Plotting App</string>
-    <string name="edit">Edit</string>
-    <string name="favorite">Favorite</string>
+    <string name="save">Save</string>
+    <string name="export">Export</string>
     <string name="more">More</string>
-    <string name="page_subtitle">Plotting Harmonic Function</string>
+    <string name="page_subtitle">Harmonic Function</string>
 </resources>
