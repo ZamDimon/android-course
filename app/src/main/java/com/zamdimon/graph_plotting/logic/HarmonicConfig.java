@@ -17,6 +17,9 @@ public class HarmonicConfig {
     /** Represents the cyclic frequency of the function */
     private float cyclicFrequency;
 
+    /**
+     * Constructs the config with default values
+     */
     public HarmonicConfig() {
         this.leftLimit = MIN_LEFT_LIMIT;
         this.rightLimit = MAX_RIGHT_LIMIT;
@@ -24,7 +27,7 @@ public class HarmonicConfig {
     }
 
     /**
-     * Constructor for the HarmonicPlot class.
+     * Constructor for the HarmonicPlot class with the specified fields.
      * @param leftLimit the left x limit from which to draw the plot
      * @param rightLimit the right x limit until which to draw the plot
      * @param cyclicFrequency the cyclic frequency of the function

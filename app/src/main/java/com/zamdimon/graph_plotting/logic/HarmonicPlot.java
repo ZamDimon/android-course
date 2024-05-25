@@ -9,8 +9,6 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -87,7 +85,7 @@ public class HarmonicPlot {
      * Forms the plot points for the plot.
      * @return the XYSeries representing the plot points
      */
-    private @NotNull XYSeries formPlotPoints() {
+    private @NonNull XYSeries formPlotPoints() {
         // Initializing empty lists
         List<Number> xNumbers = new ArrayList<>();
         List<Number> yNumbers = new ArrayList<>();
@@ -109,7 +107,7 @@ public class HarmonicPlot {
      * Draws the plot on the given XYPlot.
      * @param plot the XYPlot to draw the plot on
      */
-    public void drawPlot(@NotNull XYPlot plot) {
+    public void drawPlot(@NonNull XYPlot plot) {
         XYSeries series = formPlotPoints();
 
         final int LINE_COLOR = Color.GREEN;

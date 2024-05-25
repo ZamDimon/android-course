@@ -2,7 +2,6 @@ package com.zamdimon.graph_plotting;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,13 +10,23 @@ import com.zamdimon.graph_plotting.logic.HarmonicConfig;
 import com.zamdimon.graph_plotting.logic.HarmonicPlot;
 import com.zamdimon.graph_plotting.storage.HarmonicConfigPreferences;
 
+/**
+ * Main activity of the application. It is responsible for managing the UI and the logic of the application.
+ */
 public class MainActivity extends AppCompatActivity {
     /** Represents the binding of the activity which makes
      * it easier to manage elements of the activity */
     private static ActivityMainBinding binding;
 
+    /** Represents the preferences of the harmonic plot - basically, the settings */
     private HarmonicConfigPreferences plotPreferences;
 
+    /**
+     * Called when the activity is starting.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
         subscribeOnSharedPreferenceChanges();
     }
 
+    /**
+     * Initializes the limits slider and subscribes to its changes.
+     */
     private void initializeLimitsSlider() {
         // Setting limits from preferences
-        float initialLeftLimit = plotPreferences.getPrefences().getLeftLimit();
-        float initialRightLimit = plotPreferences.getPrefences().getRightLimit();
+        float initialLeftLimit = plotPreferences.getConfig().getLeftLimit();
+        float initialRightLimit = plotPreferences.getConfig().getRightLimit();
         binding.xLimitsSlider.setValues(initialLeftLimit, initialRightLimit);
 
         // Subscribing to updating the limits
@@ -55,9 +67,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes the frequency slider and subscribes to its changes.
+     */
     private void initializeFrequencySlider() {
         // Setting frequency from preferences
-        float initialCyclicFrequency = plotPreferences.getPrefences().getCyclicFrequency();
+        float initialCyclicFrequency = plotPreferences.getConfig().getCyclicFrequency();
         binding.frequencySlider.setValues(initialCyclicFrequency);
 
         // Subscribing to updating the frequency
@@ -67,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Subscribes to shared preferences changes and updates the plot when they change.
+     */
     private void subscribeOnSharedPreferenceChanges() {
         SharedPreferences preferences = getSharedPreferences(HarmonicConfigPreferences.PREFERENCES_NAME, Context.MODE_PRIVATE);
         preferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
@@ -74,12 +92,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays the plot on the screen.
+     */
     private void displayPlot() {
-        HarmonicConfig config = plotPreferences.getPrefences();
+        HarmonicConfig config = plotPreferences.getConfig();
         HarmonicPlot plot = new HarmonicPlot(config);
         plot.drawPlot(binding.plot);
     }
 
+    /**
+     * Initializes the top bar menu.
+     */
     private void initializeTopBarMenu() {
         binding.topAppBar.setOnMenuItemClickListener(item -> true);
     }
