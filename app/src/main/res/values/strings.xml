@@ -5,4 +5,8 @@
     <string name="export">Export</string>
     <string name="more">More</string>
     <string name="page_subtitle">Harmonic Function</string>
+    <string name="frequency_slider_label">Cyclic Frequency</string>
+    <string name="limits_slider_label">Time Limit</string>
+    <string name="x_limits_slider_description">Sets limits of time interval displayed</string>
+    <string name="frequency_slider_description">Slider regulating the frequency of harmonic functions\n</string>
 </resources>

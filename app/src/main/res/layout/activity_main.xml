@@ -36,10 +36,10 @@
             android:layout_height="0dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             app:domainTitle="domain"
-            app:layout_constraintBottom_toTopOf="@+id/frequency_slider"
+            app:layout_constraintBottom_toTopOf="@+id/frequency_slider_label"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -50,21 +50,44 @@
             app:title="Plot"
             />
 
+        <TextView
+            android:id="@+id/frequency_slider_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/plot"
+            app:layout_constraintBottom_toTopOf="@+id/frequency_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="24sp"
+            android:text="@string/frequency_slider_label" />
+
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/frequency_slider"
+            android:contentDescription="@string/frequency_slider_description"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="12dp"
             android:stepSize="0.1"
             android:valueFrom="-3.0"
             android:valueTo="3.0"
-            app:layout_constraintBottom_toTopOf="@+id/x_limits_slider"
+            app:layout_constraintBottom_toTopOf="@+id/limits_slider_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/limits_slider_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/x_limits_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="24sp"
+            android:text="@string/limits_slider_label" />
+
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/x_limits_slider"
+            android:contentDescription="@string/x_limits_slider_description"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="12dp"
             android:stepSize="0.1"
             android:valueFrom="-5.0"
             android:valueTo="5.0"
