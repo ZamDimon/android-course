@@ -1,6 +1,8 @@
-package com.zamdimon.graph_plotting.plot;
+package com.zamdimon.graph_plotting.logic;
 
 import android.graphics.Color;
+
+import androidx.annotation.NonNull;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -37,6 +39,14 @@ public class HarmonicPlot {
      */
     public HarmonicPlot() {
         this.config = new HarmonicConfig();
+    }
+
+    /**
+     * Contructs the HarmonicPlot with specified config
+     * @param config Config to initialize the plot with
+     */
+    public HarmonicPlot(@NonNull HarmonicConfig config) {
+        this.config = config;
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.zamdimon.graph_plotting.plot;
+package com.zamdimon.graph_plotting.logic;
 
 public class HarmonicConfig {
     /** Represents the minimal left value the plot can start drawing from. */
@@ -25,14 +25,14 @@ public class HarmonicConfig {
 
     /**
      * Constructor for the HarmonicPlot class.
-     * @param newLeftLimit the left x limit from which to draw the plot
-     * @param newRightLimit the right x limit until which to draw the plot
-     * @param newCyclicFrequency the cyclic frequency of the function
+     * @param leftLimit the left x limit from which to draw the plot
+     * @param rightLimit the right x limit until which to draw the plot
+     * @param cyclicFrequency the cyclic frequency of the function
      */
-    public HarmonicConfig(float newLeftLimit, float newRightLimit, float newCyclicFrequency) {
-        this.leftLimit = newLeftLimit;
-        this.rightLimit = newRightLimit;
-        this.cyclicFrequency = newCyclicFrequency;
+    public HarmonicConfig(float leftLimit, float rightLimit, float cyclicFrequency) {
+        this.leftLimit = leftLimit;
+        this.rightLimit = rightLimit;
+        this.cyclicFrequency = cyclicFrequency;
     }
 
     /**
