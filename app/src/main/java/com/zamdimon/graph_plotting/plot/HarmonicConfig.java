@@ -7,6 +7,9 @@ public class HarmonicConfig {
     /** Represents the maximal right value the plot can end drawing up. */
     public static final float MAX_RIGHT_LIMIT = 5.0f;
 
+    /** Represents the default cyclic frequency available by default */
+    public static final float DEFAULT_CYCLIC_FREQUENCY = 1.0f;
+
     /** Represents the left x limit from which to draw the plot */
     private float leftLimit;
     /** Represents the right x limit until which to draw the plot */
@@ -17,7 +20,7 @@ public class HarmonicConfig {
     public HarmonicConfig() {
         this.leftLimit = MIN_LEFT_LIMIT;
         this.rightLimit = MAX_RIGHT_LIMIT;
-        this.cyclicFrequency = 1.0f;
+        this.cyclicFrequency = DEFAULT_CYCLIC_FREQUENCY;
     }
 
     /**

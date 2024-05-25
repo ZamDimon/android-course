@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeFrequencySlider() {
+        binding.frequencySlider.setValues(HarmonicConfig.DEFAULT_CYCLIC_FREQUENCY);
         binding.frequencySlider.addOnChangeListener((rangeSlider, frequency, b) -> {
             harmonicPlot.updateCyclicFrequency(frequency);
             harmonicPlot.drawPlot(binding.plot);
