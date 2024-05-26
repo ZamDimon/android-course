@@ -30,5 +30,7 @@ Besides the main task, the application also includes the following features:
 ## :camera: Screenshots
 
 <p align="center">
-  <img src="preview.png" width="80%">
+  <img width="30%" src="screenshots/1.png">
+  <img width="30%" src="screenshots/2.png">
+  <img width="30%" src="screenshots/3.png">
 </p>
