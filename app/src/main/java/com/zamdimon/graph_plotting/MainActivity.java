@@ -1,21 +1,28 @@
 package com.zamdimon.graph_plotting;
-import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import com.google.gson.Gson;
 import com.zamdimon.graph_plotting.databinding.ActivityMainBinding;
+import com.zamdimon.graph_plotting.dialogs.HarmonicConfigConfirmDialog;
 import com.zamdimon.graph_plotting.logic.HarmonicConfig;
 import com.zamdimon.graph_plotting.logic.HarmonicPlot;
 import com.zamdimon.graph_plotting.storage.HarmonicConfigPreferences;
-
+import com.zamdimon.graph_plotting.storage.HarmonicConfigSave;
+import com.zamdimon.graph_plotting.storage.HarmonicConfigUpload;
+import com.zamdimon.graph_plotting.utils.SharedPreferencesUtil;
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     /** Represents the preferences of the harmonic plot - basically, the settings */
     private HarmonicConfigPreferences plotPreferences;
-
-    private static final int ACTIVITY_CHOOSE_FILE = 666;
 
     /**
      * Called when the activity is starting.
@@ -113,94 +118,33 @@ public class MainActivity extends AppCompatActivity {
         plot.drawPlot(binding.plot);
     }
 
+    private final ActivityResultLauncher<Intent> saveFileResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> HarmonicConfigSave.onSaveActivityResult(getApplicationContext(), result)
+    );
+
+    private final ActivityResultLauncher<Intent> uploadFileResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> HarmonicConfigUpload.onUploadActivityResult(getApplicationContext(), result, getSupportFragmentManager()));
+
     /**
      * Initializes the top bar menu.
      */
     private void initializeTopBarMenu() {
         binding.topAppBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.save) {
-                // Save the plot parameters
+                Intent intent = HarmonicConfigSave.formSaveIntent();
+                saveFileResultLauncher.launch(intent);
                 return true;
             }
             if (item.getItemId() == R.id.upload) {
-                onBrowse();
-                // Import the plot parameters
+                Intent intent = HarmonicConfigUpload.formUploadIntent();
+                uploadFileResultLauncher.launch(intent);
                 return true;
             }
 
             return false;
         });
-    }
-
-    public void onBrowse() {
-        Intent chooseFile;
-        Intent intent;
-        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
-        chooseFile.setType("text/plain");
-        intent = Intent.createChooser(chooseFile, "Choose a file");
-        startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ACTIVITY_CHOOSE_FILE) {
-            if (resultCode != RESULT_OK || data == null) {
-                super.onActivityResult(requestCode, resultCode, data);
-                return;
-            }
-            Uri uri = data.getData();
-            if (uri == null) {
-                return;
-            }
-            String fileName = getFileName(uri);
-            String fileContent = getFileContent(uri);
-            Log.e("File content: ", fileContent);
-            Log.e("File name: ", fileName);
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    public String getFileContent(Uri contentUri) {
-        try {
-            InputStream in = getContentResolver().openInputStream(contentUri);
-            if (in != null) {
-                BufferedReader r = new BufferedReader(new InputStreamReader(in));
-                StringBuilder total = new StringBuilder();
-                for (String line; (line = r.readLine()) != null; ) {
-                    total.append(line).append('\n');
-                }
-                return total.toString();
-            } else {
-                Log.e("TAG", "Input stream is null");
-            }
-        } catch (Exception e) {
-            Log.e("TAG", "Error while reading file by uri", e);
-        }
-        return "Could not read content!";
-    }
-
-    @SuppressLint("Range")
-    public String getFileName(Uri contentUri) {
-        String result = null;
-        if (contentUri.getScheme() != null && contentUri.getScheme().equals("content")) {
-            try (Cursor cursor = getContentResolver().query(contentUri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            }
-        }
-        if (result == null) {
-            result = contentUri.getPath();
-            if (result == null) {
-                return null;
-            }
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
     }
 }
 

@@ -51,4 +51,5 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation 'androidx.databinding:databinding-compiler:7.2.1'
     implementation "com.androidplot:androidplot-core:1.5.10"
+    implementation 'com.google.code.gson:gson:2.8.9'
 }

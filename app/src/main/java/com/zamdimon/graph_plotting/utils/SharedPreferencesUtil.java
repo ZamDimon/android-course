@@ -2,6 +2,8 @@ package com.zamdimon.graph_plotting.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,11 +11,12 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Map;
 
 public class SharedPreferencesUtil {
-
-    public static void saveSharedPreferencesToJson(Context context, String prefsName, String fileName) {
+    public static JSONObject getSharedPreferencesAsJson(Context context, String prefsName) {
         // Retrieve SharedPreferences
         SharedPreferences sharedPreferences = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
         Map<String, ?> allEntries = sharedPreferences.getAll();
@@ -24,16 +27,23 @@ public class SharedPreferencesUtil {
             try {
                 jsonObject.put(entry.getKey(), entry.getValue());
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e("SharedPreferencesUtil", "Error putting key-value into json object", e);
             }
         }
+        return jsonObject;
+    }
 
-        // Write JSON to File
-        File file = new File(context.getFilesDir(), fileName);
-        try (FileWriter fileWriter = new FileWriter(file)) {
-            fileWriter.write(jsonObject.toString());
+    public static void saveJsonToFile(Context context, Uri uri, JSONObject jsonObject) {
+        try {
+            OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
+            if (outputStream != null) {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+                outputStreamWriter.write(jsonObject.toString());
+                outputStreamWriter.close();
+                outputStream.close();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("SharedPreferencesUtil", "Error saving JSON to file", e);
         }
     }
 }

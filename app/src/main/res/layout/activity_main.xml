@@ -26,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:titleCentered="true"
-                app:title="@string/page_title"
+                app:title="@string/main_page_title"
                 app:subtitleCentered="true"
-                app:subtitle="@string/page_subtitle"
+                app:subtitle="@string/main_page_subtitle"
                 app:menu="@menu/top_app_bar" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -64,11 +64,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="24sp"
-            android:text="@string/frequency_slider_label" />
+            android:text="@string/sliders_frequency_slider_label" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/frequency_slider"
-            android:contentDescription="@string/frequency_slider_description"
+            android:contentDescription="@string/sliders_frequency_slider_description"
             android:layout_width="match_parent"
             android:layout_height="12dp"
             android:stepSize="0.1"
@@ -86,11 +86,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="24sp"
-            android:text="@string/limits_slider_label" />
+            android:text="@string/sliders_limits_slider_label" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/x_limits_slider"
-            android:contentDescription="@string/x_limits_slider_description"
+            android:contentDescription="@string/sliders_limits_slider_description"
             android:layout_width="match_parent"
             android:layout_height="12dp"
             android:stepSize="0.1"

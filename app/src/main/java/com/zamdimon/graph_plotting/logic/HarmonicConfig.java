@@ -80,7 +80,7 @@ public class HarmonicConfig {
     }
 
     /**
-     * @return Cyclic frequency of the plot
+     * @return the cyclic frequency of the function
      */
     public float getCyclicFrequency() {
         return cyclicFrequency;
