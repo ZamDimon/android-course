@@ -1,9 +1,7 @@
 package com.zamdimon.graph_plotting.dialogs;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,13 +9,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.zamdimon.graph_plotting.MainActivity;
 import com.zamdimon.graph_plotting.R;
 import com.zamdimon.graph_plotting.logic.HarmonicConfig;
-import com.zamdimon.graph_plotting.storage.HarmonicConfigPreferences;
 
-import java.util.function.Consumer;
-
+/**
+ * Dialog that is displayed when the configuration upload is successful.
+ */
 public class HarmonicConfigConfirmDialog extends DialogFragment {
     private final HarmonicConfig config;
 
@@ -25,18 +22,33 @@ public class HarmonicConfigConfirmDialog extends DialogFragment {
 
     private final Runnable cancelCallback;
 
+    /**
+     * Creates the dialog.
+     * @param config the configuration to be displayed
+     * @param acceptCallback the callback being called when the user accepts the upload
+     * @param cancelCallback the callback being called when the user cancels the upload
+     */
     public HarmonicConfigConfirmDialog(@NonNull HarmonicConfig config, Runnable acceptCallback, Runnable cancelCallback) {
         this.config = config;
         this.acceptCallback = acceptCallback;
         this.cancelCallback = cancelCallback;
     }
 
+    /**
+     * Forms the message of the dialog.
+     * @return the message
+     */
     private String formMessage() {
         return "Left limit: " + config.getLeftLimit() + "\n" +
                 "Right limit: " + config.getRightLimit() + "\n" +
                 "Cyclic frequency: " + config.getCyclicFrequency();
     }
 
+    /**
+     * Creates the dialog.
+     * @param savedInstanceState the saved instance state
+     * @return the dialog
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

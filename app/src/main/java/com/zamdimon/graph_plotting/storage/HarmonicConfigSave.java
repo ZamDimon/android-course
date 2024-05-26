@@ -11,7 +11,15 @@ import com.zamdimon.graph_plotting.utils.SharedPreferencesUtil;
 
 import org.json.JSONObject;
 
+/**
+ * Helper class for managing the saving of HarmonicConfig
+ */
 public class HarmonicConfigSave {
+    /**
+     * Handles the result of the save activity
+     * @param context the context of the application
+     * @param result the result of the activity
+     */
     public static void onSaveActivityResult(Context context, ActivityResult result) {
         if (result.getResultCode() != Activity.RESULT_OK) {
             return;
@@ -29,6 +37,10 @@ public class HarmonicConfigSave {
         SharedPreferencesUtil.saveJsonToFile(context, createFileUri, jsonObject);
     }
 
+    /**
+     * Creates an intent for saving the .json file with preferences
+     * @return the intent for saving the .json file
+     */
     public static Intent formSaveIntent() {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);

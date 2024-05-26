@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.zamdimon.graph_plotting.dialogs.HarmonicConfigConfirmDialog;
+import com.zamdimon.graph_plotting.dialogs.HarmonicConfigErrorDialog;
 import com.zamdimon.graph_plotting.logic.HarmonicConfig;
 
 import java.io.BufferedReader;
@@ -18,7 +19,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
+/**
+ * Helper class for managing the upload of HarmonicConfig
+ */
 public class HarmonicConfigUpload {
+    /**
+     * Handles the result of the upload activity
+     * @param context the context of the application
+     * @param result the result of the activity
+     * @param fragmentManager the fragment manager
+     * @param acceptCallback the callback being called when the user accepts the upload
+     */
     public static void onUploadActivityResult(Context context, ActivityResult result, FragmentManager fragmentManager, Consumer<HarmonicConfig> acceptCallback) {
         if (result.getResultCode() != Activity.RESULT_OK) {
             return;
@@ -34,14 +45,25 @@ public class HarmonicConfigUpload {
         }
         HarmonicConfig config = getFileContent(chooseFileUri, context.getContentResolver());
         if (config == null) {
+            // Displaying an error
+            HarmonicConfigErrorDialog errorDialog = new HarmonicConfigErrorDialog();
+            final String UPLOAD_ERROR_DIALOG_TAG = "error_dialog";
+            errorDialog.show(fragmentManager, UPLOAD_ERROR_DIALOG_TAG);
             return;
         }
 
+        // Displaying a success button
         HarmonicConfigConfirmDialog dialog = new HarmonicConfigConfirmDialog(config, () -> acceptCallback.accept(config), () -> {});
         final String UPLOAD_DIALOG_TAG = "upload_dialog";
         dialog.show(fragmentManager, UPLOAD_DIALOG_TAG);
     }
 
+    /**
+     * Retrieves the content of the file in the form of HarmonicConfig
+     * @param contentUri the URI of the content
+     * @param contentResolver the content resolver
+     * @return the HarmonicConfig object
+     */
     public static HarmonicConfig getFileContent(Uri contentUri, ContentResolver contentResolver) {
         try {
             InputStream inputStream = contentResolver.openInputStream(contentUri);
@@ -62,6 +84,10 @@ public class HarmonicConfigUpload {
         }
     }
 
+    /**
+     * Forms the upload intent
+     * @return the upload intent
+     */
     public static Intent formUploadIntent() {
         Intent chooseFile;
         Intent intent;

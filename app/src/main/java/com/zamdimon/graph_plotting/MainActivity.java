@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Refreshes the sliders with the values from the preferences.
+     */
     public void refreshSliders() {
         float initialLeftLimit = plotPreferences.getConfig().getLeftLimit();
         float initialRightLimit = plotPreferences.getConfig().getRightLimit();
@@ -118,11 +121,17 @@ public class MainActivity extends AppCompatActivity {
         plot.drawPlot(binding.plot);
     }
 
+    /**
+     * Registers the activity result launcher for saving the file.
+     */
     private final ActivityResultLauncher<Intent> saveFileResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> HarmonicConfigSave.onSaveActivityResult(getApplicationContext(), result)
     );
 
+    /**
+     * Registers the activity result launcher for uploading the file.
+     */
     private final ActivityResultLauncher<Intent> uploadFileResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> HarmonicConfigUpload.onUploadActivityResult(getApplicationContext(), result, getSupportFragmentManager(), (HarmonicConfig config) -> {

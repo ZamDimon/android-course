@@ -19,4 +19,6 @@
     <string name="config_upload_title"> Are you sure you want to apply the following settings? </string>
     <string name="config_upload_confirm"> Confirm </string>
     <string name="config_upload_cancel"> Cancel </string>
+    <string name="config_upload_error_title"> Uploading Error </string>
+    <string name="config_upload_error_message"> An error occurred while loading the file. Are you sure the file is of the correct format? </string>
 </resources>

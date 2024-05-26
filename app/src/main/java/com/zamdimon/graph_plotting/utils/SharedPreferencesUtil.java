@@ -15,7 +15,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Map;
 
+/**
+ * Utility class for handling SharedPreferences
+ */
 public class SharedPreferencesUtil {
+    /**
+     * Converts SharedPreferences to JSON Object
+     * @param context the context of the application
+     * @param prefsName the name of the SharedPreferences file
+     * @return JSON Object containing the SharedPreferences
+     */
     public static JSONObject getSharedPreferencesAsJson(Context context, String prefsName) {
         // Retrieve SharedPreferences
         SharedPreferences sharedPreferences = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
@@ -33,6 +42,12 @@ public class SharedPreferencesUtil {
         return jsonObject;
     }
 
+    /**
+     * Saves JSON Object to file
+     * @param context the context of the application
+     * @param uri the URI of the file to save
+     * @param jsonObject the JSON Object to save
+     */
     public static void saveJsonToFile(Context context, Uri uri, JSONObject jsonObject) {
         try {
             OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
