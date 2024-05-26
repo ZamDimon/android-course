@@ -105,14 +105,7 @@ public class MainActivity extends AppCompatActivity {
      * Initializes the top bar menu.
      */
     private void initializeTopBarMenu() {
-        binding.topAppBar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.) {
-                // Open the settings activity
-                startActivity(SettingsActivity.createIntent(getApplicationContext()));
-                return true;
-            }
-            return false;
-        });
+        binding.topAppBar.setOnMenuItemClickListener(item -> true);
     }
 }
 
