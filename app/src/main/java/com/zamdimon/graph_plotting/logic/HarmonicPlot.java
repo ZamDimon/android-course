@@ -1,9 +1,11 @@
 package com.zamdimon.graph_plotting.logic;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
 
+import com.androidplot.xy.CatmullRomInterpolator;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
@@ -76,7 +78,7 @@ public class HarmonicPlot {
         float periods = config.getLimitLength() / period;
         // We want at least 10 points, otherwise adapt according to the number
         // of periods.
-        final int POINTS_PER_PERIOD = 8;
+        final int POINTS_PER_PERIOD = 16;
         final int MIN_POINTS = 13;
         return Math.max((int) (periods * POINTS_PER_PERIOD), MIN_POINTS);
     }
@@ -110,9 +112,19 @@ public class HarmonicPlot {
     public void drawPlot(@NonNull XYPlot plot) {
         XYSeries series = formPlotPoints();
 
-        final int LINE_COLOR = Color.GREEN;
-        final int POINT_COLOR = Color.RED;
+        final int LINE_COLOR = Color.BLUE;
+        final int POINT_COLOR = Color.GREEN;
         LineAndPointFormatter pointFormatter = new LineAndPointFormatter(LINE_COLOR, POINT_COLOR, null, null);
+
+        // Adding interpolation to make curve a little bit smoother
+        final int POINTS_PER_SEGMENT = 20;
+        pointFormatter.setInterpolationParams(new CatmullRomInterpolator.Params(POINTS_PER_SEGMENT, CatmullRomInterpolator.Type.Centripetal));
+
+        // Change the line width
+        final int STROKE_WIDTH = 10;
+        Paint paint = pointFormatter.getLinePaint();
+        paint.setStrokeWidth(STROKE_WIDTH);
+        pointFormatter.setLinePaint(paint);
 
         // Clearing and redrawing the plot
         plot.clear();

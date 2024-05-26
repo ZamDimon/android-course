@@ -34,12 +34,14 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.androidplot.xy.XYPlot
+            style="@style/CustomPlotStyle.Pinkish"
             android:id="@+id/plot"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             app:domainTitle="domain"
             app:layout_constraintBottom_toTopOf="@+id/frequency_slider_label"
@@ -48,7 +50,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:lineLabelRotationBottom="-45"
-            app:lineLabels="left|bottom"
+            app:lineLabels="left|bottom|right"
             app:rangeTitle="range"
             app:title="Plot"
             />

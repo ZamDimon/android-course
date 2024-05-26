@@ -47,4 +47,31 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
     </style>
+
+    <style name="CustomPlotStyle">
+        <item name="graphMarginTop">0dp</item>
+        <item name="graphMarginBottom">0dp</item>
+        <item name="graphMarginLeft">0dp</item>
+        <item name="graphMarginRight">0dp</item>
+        <item name="graphHeightMode">fill</item>
+        <item name="graphWidthMode">fill</item>
+        <item name="graphHeight">0</item>
+        <item name="graphWidth">0</item>
+        <item name="domainLineThickness">0.5dp</item>
+        <item name="graphHorizontalPositioning">absolute_from_left</item>
+        <item name="graphVerticalPositioning">absolute_from_top</item>
+        <item name="rangeLineThickness">0.5dp</item>
+        <item name="graphAnchor">left_top</item>
+        <item name="graphHorizontalPosition">0dp</item>
+        <item name="graphVerticalPosition">0dp</item>
+        <item name="legendVisible">false</item>
+    </style>
+
+    <style name="CustomPlotStyle.Pinkish">
+        <item name="domainLineColor">@color/material_dynamic_neutral20</item>
+        <item name="rangeLineColor">@color/material_dynamic_neutral20</item>
+        <item name="backgroundColor">@color/material_dynamic_tertiary90</item>
+        <item name="gridBackgroundColor">@color/material_dynamic_tertiary90</item>
+        <item name="borderColor">@color/ap_transparent</item>
+    </style>
 </resources>
