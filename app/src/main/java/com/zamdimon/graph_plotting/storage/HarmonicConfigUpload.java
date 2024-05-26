@@ -16,27 +16,30 @@ import com.zamdimon.graph_plotting.logic.HarmonicConfig;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.function.Consumer;
 
 public class HarmonicConfigUpload {
-    public static void onUploadActivityResult(Context context, ActivityResult result, FragmentManager fragmentManager) {
-        if (result.getResultCode() == Activity.RESULT_OK) {
-            Intent data = result.getData();
-            if (data == null) {
-                return;
-            }
-            Uri chooseFileUri = data.getData();
-            if (chooseFileUri == null) {
-                return;
-            }
-            HarmonicConfig config = getFileContent(chooseFileUri, context.getContentResolver());
-            if (config == null) {
-                return;
-            }
-
-            HarmonicConfigConfirmDialog dialog = new HarmonicConfigConfirmDialog(config);
-            final String UPLOAD_DIALOG_TAG = "upload_dialog";
-            dialog.show(fragmentManager, UPLOAD_DIALOG_TAG);
+    public static void onUploadActivityResult(Context context, ActivityResult result, FragmentManager fragmentManager, Consumer<HarmonicConfig> acceptCallback) {
+        if (result.getResultCode() != Activity.RESULT_OK) {
+            return;
         }
+
+        Intent data = result.getData();
+        if (data == null) {
+            return;
+        }
+        Uri chooseFileUri = data.getData();
+        if (chooseFileUri == null) {
+            return;
+        }
+        HarmonicConfig config = getFileContent(chooseFileUri, context.getContentResolver());
+        if (config == null) {
+            return;
+        }
+
+        HarmonicConfigConfirmDialog dialog = new HarmonicConfigConfirmDialog(config, () -> acceptCallback.accept(config), () -> {});
+        final String UPLOAD_DIALOG_TAG = "upload_dialog";
+        dialog.show(fragmentManager, UPLOAD_DIALOG_TAG);
     }
 
     public static HarmonicConfig getFileContent(Uri contentUri, ContentResolver contentResolver) {

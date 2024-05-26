@@ -69,7 +69,7 @@ public class HarmonicConfigPreferences {
      * @param context the context of the application
      * @param config the configuration to be saved
      */
-    public void savePreferences(@NonNull Context context, HarmonicConfig config) {
+    public void saveConfig(@NonNull Context context, HarmonicConfig config) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 

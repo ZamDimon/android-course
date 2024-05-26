@@ -1,31 +1,19 @@
 package com.zamdimon.graph_plotting;
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import com.google.gson.Gson;
 import com.zamdimon.graph_plotting.databinding.ActivityMainBinding;
-import com.zamdimon.graph_plotting.dialogs.HarmonicConfigConfirmDialog;
 import com.zamdimon.graph_plotting.logic.HarmonicConfig;
 import com.zamdimon.graph_plotting.logic.HarmonicPlot;
 import com.zamdimon.graph_plotting.storage.HarmonicConfigPreferences;
 import com.zamdimon.graph_plotting.storage.HarmonicConfigSave;
 import com.zamdimon.graph_plotting.storage.HarmonicConfigUpload;
-import com.zamdimon.graph_plotting.utils.SharedPreferencesUtil;
-import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Main activity of the application. It is responsible for managing the UI and the logic of the application.
@@ -33,7 +21,7 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity {
     /** Represents the binding of the activity which makes
      * it easier to manage elements of the activity */
-    private static ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     /** Represents the preferences of the harmonic plot - basically, the settings */
     private HarmonicConfigPreferences plotPreferences;
@@ -47,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         Context context = getApplicationContext();
 
@@ -75,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         float initialRightLimit = plotPreferences.getConfig().getRightLimit();
         binding.xLimitsSlider.setValues(initialLeftLimit, initialRightLimit);
 
+        // Setting the minimum separation between the limits to avoid cases
+        // when left limit is exactly the right limit
+        final float MIN_SEPARATION = 0.3f;
+        binding.xLimitsSlider.setMinSeparationValue(MIN_SEPARATION);
+
         // Subscribing to updating the limits
         binding.xLimitsSlider.addOnChangeListener((slider, value, fromUser) -> {
             Context context = getApplicationContext();
@@ -82,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
             float rightLimit = binding.xLimitsSlider.getValues().get(1);
             plotPreferences.saveLimits(context, leftLimit, rightLimit);
         });
+    }
+
+    public void refreshSliders() {
+        float initialLeftLimit = plotPreferences.getConfig().getLeftLimit();
+        float initialRightLimit = plotPreferences.getConfig().getRightLimit();
+        binding.xLimitsSlider.setValues(initialLeftLimit, initialRightLimit);
+
+        float initialCyclicFrequency = plotPreferences.getConfig().getCyclicFrequency();
+        binding.frequencySlider.setValues(initialCyclicFrequency);
     }
 
     /**
@@ -104,9 +106,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void subscribeOnSharedPreferenceChanges() {
         SharedPreferences preferences = getSharedPreferences(HarmonicConfigPreferences.PREFERENCES_NAME, Context.MODE_PRIVATE);
-        preferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
-            displayPlot();
-        });
+        preferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> displayPlot());
     }
 
     /**
@@ -125,7 +125,11 @@ public class MainActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<Intent> uploadFileResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> HarmonicConfigUpload.onUploadActivityResult(getApplicationContext(), result, getSupportFragmentManager()));
+            result -> HarmonicConfigUpload.onUploadActivityResult(getApplicationContext(), result, getSupportFragmentManager(), (HarmonicConfig config) -> {
+                plotPreferences.saveConfig(getApplicationContext(), config);
+                displayPlot();
+                refreshSliders();
+            }));
 
     /**
      * Initializes the top bar menu.

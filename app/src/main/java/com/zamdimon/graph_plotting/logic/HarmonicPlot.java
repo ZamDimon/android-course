@@ -78,8 +78,8 @@ public class HarmonicPlot {
         float periods = config.getLimitLength() / period;
         // We want at least 10 points, otherwise adapt according to the number
         // of periods.
-        final int POINTS_PER_PERIOD = 16;
-        final int MIN_POINTS = 13;
+        final int POINTS_PER_PERIOD = 35;
+        final int MIN_POINTS = 35;
         return Math.max((int) (periods * POINTS_PER_PERIOD), MIN_POINTS);
     }
 

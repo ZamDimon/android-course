@@ -16,7 +16,7 @@
     <string name="sliders_limits_slider_description">Sets limits of time interval displayed</string>
 
     <!-- Config upload dialog -->
-    <string name="config_upload_title"> Are you sure you want to convert the following settings? </string>
+    <string name="config_upload_title"> Are you sure you want to apply the following settings? </string>
     <string name="config_upload_confirm"> Confirm </string>
     <string name="config_upload_cancel"> Cancel </string>
 </resources>
