@@ -24,7 +24,7 @@ public class HarmonicPlot {
     private Function<Float, Float> function = x -> (float) (Math.sin(x) + Math.cos(x));
 
     /** Configuration file of our plot. Contains the core data such as frequency or x limits. */
-    private HarmonicConfig config;
+    private final HarmonicConfig config;
 
     /**
      * Sets the function to be plotted.
