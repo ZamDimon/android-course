@@ -17,6 +17,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/material_dynamic_tertiary80"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -24,7 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
+                app:titleCentered="true"
                 app:title="@string/page_title"
+                app:subtitleCentered="true"
                 app:subtitle="@string/page_subtitle"
                 app:menu="@menu/top_app_bar" />
 
