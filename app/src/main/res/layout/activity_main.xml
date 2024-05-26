@@ -25,9 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:titleCentered="true"
                 app:title="@string/main_page_title"
-                app:subtitleCentered="true"
                 app:subtitle="@string/main_page_subtitle"
                 app:menu="@menu/top_app_bar" />
 

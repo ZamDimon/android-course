@@ -6,6 +6,7 @@
     <string name="main_page_subtitle">Harmonic Function</string>
 
     <!-- Toolbar -->
+    <string name="toolbar_reset">Reset</string>
     <string name="toolbar_save">Save</string>
     <string name="toolbar_upload">Upload</string>
 

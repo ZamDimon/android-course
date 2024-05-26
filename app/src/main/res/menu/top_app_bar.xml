@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/reset"
+        android:title="@string/toolbar_reset"
+        android:icon="@drawable/reset"
+        app:showAsAction="ifRoom"
+        />
+    <item
         android:id="@+id/save"
         android:title="@string/toolbar_save"
         android:icon="@drawable/save"

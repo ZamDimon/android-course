@@ -145,6 +145,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initializeTopBarMenu() {
         binding.topAppBar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.reset) {
+                HarmonicConfig defaultConfig = new HarmonicConfig();
+                plotPreferences.saveConfig(getApplicationContext(), defaultConfig);
+                displayPlot();
+                refreshSliders();
+            }
             if (item.getItemId() == R.id.save) {
                 Intent intent = HarmonicConfigSave.formSaveIntent();
                 saveFileResultLauncher.launch(intent);
