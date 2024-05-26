@@ -3,6 +3,7 @@ package com.zamdimon.graph_plotting.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -63,7 +64,16 @@ public class HarmonicConfigConfirmDialog extends DialogFragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
         builder.setTitle(R.string.config_upload_title)
                 .setMessage(formMessage())
-                .setPositiveButton(R.string.config_upload_confirm, (dialog, id) -> acceptCallback.run())
+                .setPositiveButton(R.string.config_upload_confirm, (dialog, id) -> {
+                    acceptCallback.run();
+
+                    // Displaying a toast
+                    CharSequence text = "Upload successful!";
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                })
                 .setNegativeButton(R.string.config_upload_cancel, (dialog, id) -> cancelCallback.run());
 
         return builder.create();

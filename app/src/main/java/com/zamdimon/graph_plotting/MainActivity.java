@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> uploadFileResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> HarmonicConfigUpload.onUploadActivityResult(getApplicationContext(), result, getSupportFragmentManager(), (HarmonicConfig config) -> {
+                // NOTE: it is quite painful to pass all the necessary parameters inside
+                // the HarmonicConfigUpload class, so we just pass the Consumer to the method
                 plotPreferences.saveConfig(getApplicationContext(), config);
                 displayPlot();
                 refreshSliders();

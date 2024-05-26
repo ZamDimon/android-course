@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 
@@ -35,6 +36,13 @@ public class HarmonicConfigSave {
         }
         JSONObject jsonObject = SharedPreferencesUtil.getSharedPreferencesAsJson(context, HarmonicConfigPreferences.PREFERENCES_NAME);
         SharedPreferencesUtil.saveJsonToFile(context, createFileUri, jsonObject);
+
+        // Displaying a toast
+        CharSequence text = "File saved successfully!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     /**
