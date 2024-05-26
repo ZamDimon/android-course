@@ -1,6 +1,10 @@
 # :iphone: Android Course
 
-This repository contains the source files for "Introduction to Android Development" course homework assignments.
+<p align="center">
+  <img width="10%" src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp">
+</p>
+
+This repository contains the source files for the "Introduction to Android Development" final project assignment.
 
 ## :pencil2: Task
 
@@ -12,7 +16,7 @@ $$
 
 where the user can specify the value of $\omega$ and the range of $t$. 
 
-The graph should be updated in real time as the user changes the value of $\omega$ or the range of $t$.
+The graph should be updated in real-time as the user changes the value of $\omega$ or the range of $t$.
 
 ## :sparkles: Main features
 
